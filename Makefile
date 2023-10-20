@@ -42,4 +42,4 @@ test: index.html
 
 all: blog-posts index.html blog.html resume.html
 
-.PHONY: all blog-posts indicators blog.html
+.PHONY: all blog-posts indicators
