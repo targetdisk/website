@@ -1,0 +1,134 @@
+body {
+	background-color: #616db8;
+	margin: 0px;
+}
+
+.black {
+	width: 100%;
+	margin: 0px;
+	position: sticky;
+	height: 30pt;
+	float: none;
+	background-color: #000000;
+}
+
+.fc {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 75%;
+	margin-top: 5%;
+}
+.fc > img {
+	width: 50%;
+	height: 100%;
+}
+
+.window {
+	margin-top: 5%;
+	margin-left: 2%;
+	margin-right: 2%;
+	justify-content: center;
+}
+
+.content-flexbox {
+	display: flex;
+	margin: 0px;
+	background-color: #000000;
+}
+
+.content-border-left {
+	width: 6.8pt;
+	margin: 0px;
+}
+
+.inner {
+	width: 100%;
+	height: 100%;
+	font-family: Ebrima;
+	margin: 0.7pt;
+	padding: 2%;
+	background-color: #ffffff;
+}
+
+.content-border-right {
+	width: 8.1pt;
+	margin: 0px;
+}
+
+.title-flexbar {
+	display: flex;
+	margin: 0px;
+	height: 30pt;
+	background-color: #cdcbcd;
+}
+
+.titlebar-left {
+	width: 6.8pt;
+	margin: 0px;
+}
+
+.titlebar-right {
+	width: 8.1pt;
+	margin: 0px;
+	background-color: #616db8;
+}
+
+.bottombar-flexbox {
+	display: flex;
+	height: 9.5pt;
+	margin: 0px;
+}
+
+.bottombar-left {
+	background-color: #616db8;
+}
+
+.bottombar-middle {
+	flex-grow: 1;
+}
+
+.bottombar-right {
+	width: 6.8pt;
+	background-color: #616db8;
+}
+
+.flexbar {
+	background-color: #dedddf;
+	display: flex;
+	justify-content: center;
+	margin: 0px;
+	height: 30pt;
+}
+
+.left-menu {
+	width: 191pt;
+	height: 100%;
+	margin: 0px;
+}
+.middle {
+	flex-grow: 1;
+	margin: 0px;
+}
+.welcome-right-menu {
+	width: 118pt;
+	height: 100%;
+	margin: 0px;
+}
+
+.blog-right-menu {
+	width: 73.6pt;
+	height: 100%;
+	margin: 0px;
+}
+
+.resume-right-menu {
+	width: 95.5pt;
+	height: 100%;
+	margin: 0px;
+}
+
+@font-face {
+	font-family: Ebrima;
+	src: url(ebrimabd.ttf);
+}
