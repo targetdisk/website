@@ -6,10 +6,10 @@ media
 blog/20*.html
 blog.html
 blog.inner.html
+*.head.html
 
 index.html
 git.html
-
 resume.html
 resume.inner.html
 
