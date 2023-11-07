@@ -1,0 +1,3 @@
+[submodule "scripts/util"]
+	path = scripts/util
+	url = https://github.com/targetdisk/bash-util

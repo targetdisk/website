@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+. "$(dirname $0)/util/logging.bash"
+. "$(dirname $0)/certbot.bash"
+
+fns=(
+	add_deps
+	setup_rust
+	install_srv
+	install_certbot
+	setup_certbot
+	install_cloudflared
+	start_srv
+	show_help
+)
+
+show_help() {
+	[ "$1" == help ] && echo -n "Display this help." && return 0
+
+	cat <<<"$HELPSTR"
+}
+
+# Don't forget to add musl-dev!
+add_deps() {
+	[ "$1" == help ] && echo -n "Install deps for building static-web-server." && return 0
+	[ $UID -ne 0 ] && die "ERROR: must be root!"
+
+	if [ -e /etc/debian_version ]; then
+		sudo apt install build-essential python3-pip socat
+	elif [ -e /etc/alpine-release ]; then
+		apk add gcc make musl-dev rustup py3-pip # clang gcc-libs libgcc
+		#apk add git
+	else
+		die "ERROR: Unsupported.  Get the dependencies yourself!"
+	fi
+}
+
+setup_rust() {
+	[ "$1" == help ] && echo -n "Configure rustup for user." && return 0
+
+	if [ -e /etc/debian_version ]; then
+		wget "https://static.rust-lang.org/rustup/dist/$(uname -m)-unknown-linux-gnu/rustup-init"
+		# TODO: verify sigs
+		chmod +x rustup-init
+		./rustup-init <<<$'1\n'
+	else
+		rustup-init <<<$'1\n'
+	fi
+}
+
+install_srv() {
+	[ "$1" == help ] && echo -n "Install static-web-server." && return 0
+
+	mkdir -p ~/src
+	git clone --recurse-submodules \
+		https://github.com/static-web-server/static-web-server.git \
+		~/src/static-web-server
+
+	cargo install --path ~/src/static-web-server
+}
+
+start_srv() {
+	[ "$1" == help ] && echo -n "Start local static-web-server." && return 0
+
+	local httproot
+	[ -n "$1" ] && httproot="$1" || httproot="$HOME/httproot"
+
+	static-web-server \
+		--port 1337 \
+		--host 127.0.0.1 \
+		--root "$httproot"
+}
+
+read -d '' EXTRA_NOTE <<EONOTE
+
+Note: You will need to run some operations as different users for security and
+      practicality.
+
+EONOTE
+
+. "$(dirname $0)/util/dynamic_main.bash"
