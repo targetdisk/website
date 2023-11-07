@@ -43,14 +43,25 @@ install_cloudflared() {
 	[ "$1" == help ] && echo -n "Setup cloudflared." && return 0
 	[ $UID -ne 0 ] && die "ERROR: must be root!"
 
-	# Alpine+Cloudflare+Go made me do this
-	wget -O /usr/local/bin/cloudflared \
-		'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64'
+	if [ -e /etc/debian_version ]; then
+		sudo mkdir -p --mode=0755 /usr/share/keyrings
+		curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg \
+			| sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
 
-	# We really should be checking a checksum/sig before doing this...
-	# Oh well...
-	chmod +x /usr/local/bin/cloudflared
+		echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared $(lsb_release -cs) main" \
+			| sudo tee /etc/apt/sources.list.d/cloudflared.list
 
-	# If you hack Cloudflare's GitHub/devs you honestly deserve the keys to my little
-	# kingdom... ¯\_(ツ)_/¯
+		sudo apt-get update && sudo apt-get install cloudflared
+	else
+		# Alpine+Cloudflare+Go made me do this
+		wget -O /usr/local/bin/cloudflared \
+			'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64'
+
+		# We really should be checking a checksum/sig before doing this...
+		# Oh well...
+		chmod +x /usr/local/bin/cloudflared
+
+		# If you hack Cloudflare's GitHub/devs you honestly deserve the keys to my little
+		# kingdom... ¯\_(ツ)_/¯
+	fi
 }
