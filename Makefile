@@ -1,3 +1,6 @@
+DEPLOY_HTTPROOT ?= httproot
+DEPLOY_BLOBS = andrea0s-plain-noextfonts.svg blob/ebrimabd.ttf blob/window-capture
+
 UNAME = $(shell uname)
 ifeq ($(UNAME),Linux)
 	OPEN=xdg-open
@@ -40,6 +43,14 @@ index.html: indexhead.html nav.head.html index.indicator.html nav.tail.html inde
 test: index.html
 	$(OPEN) $<
 
+$(DEPLOY_HTTPROOT)/blob:
+	mkdir -p $(@)
+	cp -rv $(DEPLOY_BLOBS) $(@)
+
+deploy: all $(DEPLOY_HTTPROOT)/blob
+	cp -rv *.css *.html blog media \
+		$(DEPLOY_HTTPROOT)
+
 all: blog-posts index.html blog.html resume.html
 
-.PHONY: all blog-posts indicators
+.PHONY: all blog-posts indicators deploy
