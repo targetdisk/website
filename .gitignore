@@ -5,6 +5,7 @@ media
 /*root
 
 blog/20*.html
+blog/vcf*-20*.html
 blog.html
 blog.inner.html
 *.head.html

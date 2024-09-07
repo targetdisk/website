@@ -1,5 +1,5 @@
 DEPLOY_HTTPROOT ?= httproot
-DEPLOY_BLOBS = andrea0s-plain-noextfonts.svg blob/ebrimabd.ttf blob/window-capture
+DEPLOY_BLOBS = andrea0s-plain-noextfonts.svg blob/ebrimabd.ttf blob/window-capture blob/vcf-2024-pile.jpg
 
 UNAME = $(shell uname)
 ifeq ($(UNAME),Linux)
