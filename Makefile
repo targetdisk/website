@@ -20,6 +20,9 @@ blog/%.indicator.html: indicators
 blog/%.html: %.head.html nav.head.html %.indicator.html nav.tail.html window.head.html %.inner.html window.tail.html
 	cat $^ > $@
 
+vcf%.html: vcf%.head.html nav.head.html blog/vcf%.indicator.html nav.tail.html window.head.html blog/vcf%.inner.html window.tail.html
+	cat $^ > $@
+
 blog.inner.html: $(BLOG_SRC)
 	scripts/blogposts.bash > $@
 
@@ -51,6 +54,6 @@ deploy: all $(DEPLOY_HTTPROOT)/blob
 	cp -rv *.css *.html blog media \
 		$(DEPLOY_HTTPROOT)
 
-all: blog-posts index.html blog.html resume.html
+all: blog-posts index.html blog.html resume.html vcfmw-2024.html
 
 .PHONY: all blog-posts indicators deploy
