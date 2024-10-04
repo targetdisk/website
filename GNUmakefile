@@ -1,5 +1,14 @@
 DEPLOY_HTTPROOT ?= httproot
-DEPLOY_BLOBS = andrea0s-plain-noextfonts.svg blob/ebrimabd.ttf blob/window-capture blob/vcf-2024-pile.jpg
+DEPLOY_BLOBS = andrea0s-plain-noextfonts.svg \
+	       blob/ebrimabd.ttf \
+	       blob/window-capture \
+	       blob/vcf-2024-pile.jpg
+AWESOME_BLOGS := -s https://lwn.net/headlines/rss \
+		 -s https://lobste.rs/rss \
+		 -s https://blog.haskell.org/atom.xml \
+		 -s https://www.phoronix.com/rss.php \
+		 -s https://static.fsf.org/fsforg/rss/news.xml \
+		 -s https://emersion.fr/blog/rss.xml
 
 UNAME = $(shell uname)
 ifeq ($(UNAME),Linux)
@@ -24,7 +33,15 @@ vcf%.html: vcf%.head.html nav.head.html blog/vcf%.indicator.html nav.tail.html w
 	cat $^ > $@
 
 blog.inner.html: $(BLOG_SRC)
-	scripts/blogposts.bash > $@
+	scripts/blogposts.bash \
+		| modules/openring/openring -n 12 -p 3 \
+		  $(AWESOME_BLOGS) > $@
+
+modules/openring/openring.go: .gitmodules
+	git submodule update --init --recursive -- modules/openring
+
+modules/openring/openring: modules/openring/openring.go
+	cd modules/openring && go build
 
 modules/resume/resume.md: .gitmodules
 	git submodule update --init --recursive -- modules/resume
