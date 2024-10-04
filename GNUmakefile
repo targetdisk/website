@@ -26,6 +26,12 @@ vcf%.html: vcf%.head.html nav.head.html blog/vcf%.indicator.html nav.tail.html w
 blog.inner.html: $(BLOG_SRC)
 	scripts/blogposts.bash > $@
 
+modules/resume/resume.md: .gitmodules
+	git submodule update --init --recursive -- modules/resume
+
+resume.md: modules/resume/resume.md
+	tail -n+9 < $< > $@
+
 resume.inner.html: resume.md
 	pandoc --standalone --template template.html $^ -o $@
 
