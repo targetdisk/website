@@ -1,3 +1,9 @@
 [submodule "scripts/util"]
 	path = scripts/util
 	url = https://github.com/targetdisk/bash-util
+[submodule "modules/openring"]
+	path = modules/openring
+	url = https://git.sr.ht/~sircmpwn/openring
+[submodule "modules/resume"]
+	path = modules/resume
+	url = https://github.com/targetdisk/resume
